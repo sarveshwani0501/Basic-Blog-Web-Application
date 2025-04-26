@@ -1,0 +1,306 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Blog</title>
+    <style>
+      img {
+        border-radius: 20px;
+        border-color: gray;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('./partials/nav') %>
+    <div class="container mt-4">
+      <h1><%= blog.title %></h1>
+      <img src="<%= blog.coverImageURL%>" width="750px" />
+      <pre><%= blog.body %></pre>
+    </div>
+
+    <div class="container mt-4">
+      <h4><i>Written By</i></h4>
+      <img src="<%= blog.createdBy.profileImageURL %>" alt="" width="50px" />
+      <%=blog.createdBy.fullName%>
+    </div>
+
+    <div class="container mt-3 mb-3">
+      <h1>Comments (<%=comments.length%>)</h1>
+      <% if (locals.user) { %>
+      <form action="/blog/comment/<%=blog._id%>" method="post">
+        <div class="mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="content"
+            name="content"
+            placeholder="Enter your comment..."
+          />
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm">Add</button>
+      </form>
+      <% } %>
+      <div class="container mt-3">
+        <% comments.forEach(comment => { %>
+        <div class="container border border-success-subtle pt-3 m-4">
+          <p><%=comment.content%></p>
+        </div>
+        <img
+          src="<%= comment.createdBy.profileImageURL %>"
+          alt=""
+          width="30px"
+        />
+        <%=comment.createdBy.fullName%> <% }) %>
+      </div>
+    </div>
+    <%- include('./partials/scripts') %>
+  </body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <title><%= blog.title %> | Blog</title>
+    <style>
+      body {
+        background-color: #f8f9fa;
+        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        color: #333;
+        line-height: 1.6;
+      }
+      
+      .blog-header {
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+        color: white;
+        padding: 3rem 0;
+        margin-bottom: 0;
+        position: relative;
+      }
+      
+      .blog-title {
+        font-weight: 700;
+        font-size: 2.5rem;
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      
+      .blog-container {
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+        padding: 2rem;
+        max-width: 800px;
+        margin: -3rem auto 3rem;
+        position: relative;
+      }
+      
+      .blog-cover-img {
+        border-radius: 12px;
+        width: 100%;
+        height: auto;
+        margin-bottom: 2rem;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        border: none;
+      }
+      
+      .blog-content {
+        font-size: 1.1rem;
+        white-space: pre-wrap;
+        line-height: 1.8;
+        color: #444;
+      }
+      
+      .author-section {
+        display: flex;
+        align-items: center;
+        padding: 1.5rem;
+        background-color: #f8f9fa;
+        border-radius: 12px;
+        margin: 3rem 0;
+      }
+      
+      .author-img {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 1rem;
+        border: 3px solid white;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      }
+      
+      .author-name {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin: 0;
+      }
+      
+      .author-label {
+        font-style: italic;
+        color: #6c757d;
+        margin-bottom: 0.5rem;
+      }
+      
+      .comments-section {
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+        padding: 2rem;
+        max-width: 800px;
+        margin: 0 auto 3rem;
+      }
+      
+      .comments-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #e9ecef;
+      }
+      
+      .comments-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0;
+      }
+      
+      .comment-count {
+        background-color: #6e8efb;
+        color: white;
+        border-radius: 50px;
+        padding: 0.25rem 1rem;
+        font-size: 0.9rem;
+      }
+      
+      .comment-form {
+        margin-bottom: 2rem;
+      }
+      
+      .comment-input {
+        border-radius: 50px;
+        padding: 0.75rem 1.5rem;
+        border: 1px solid #ced4da;
+      }
+      
+      .btn-comment {
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+        border: none;
+        border-radius: 50px;
+        padding: 0.5rem 1.5rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+      }
+      
+      .btn-comment:hover {
+        background: linear-gradient(135deg, #5d7bf7, #9666d8);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 10px rgba(110, 142, 251, 0.4);
+      }
+      
+      .comment-container {
+        padding: 0;
+      }
+      
+      .comment-card {
+        background-color: #f8f9fa;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border: none !important;
+        border-left: 4px solid #6e8efb !important;
+      }
+      
+      .comment-text {
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+      
+      .comment-user {
+        display: flex;
+        align-items: center;
+      }
+      
+      .comment-user-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 0.75rem;
+      }
+      
+      .comment-username {
+        font-weight: 600;
+        color: #444;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('./partials/nav') %>
+    
+    <div class="blog-header">
+      <div class="container">
+        <h1 class="blog-title"><%= blog.title %></h1>
+      </div>
+    </div>
+    
+    <div class="container">
+      <div class="blog-container">
+        <img src="<%= blog.coverImageURL%>" class="blog-cover-img" alt="<%= blog.title %>" />
+        <div class="blog-content"><%= blog.body %></div>
+        
+        <div class="author-section">
+          <img src="<%= blog.createdBy.profileImageURL %>" alt="<%= blog.createdBy.fullName %>" class="author-img" />
+          <div>
+            <div class="author-label">Written By</div>
+            <div class="author-name"><%=blog.createdBy.fullName%></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="comments-section">
+        <div class="comments-header">
+          <h3 class="comments-title">Comments</h3>
+          <span class="comment-count"><%=comments.length%></span>
+        </div>
+        
+        <% if (locals.user) { %>
+        <form action="/blog/comment/<%=blog._id%>" method="post" class="comment-form">
+          <div class="mb-3">
+            <input
+              type="text"
+              class="form-control comment-input"
+              id="content"
+              name="content"
+              placeholder="Share your thoughts..."
+            />
+          </div>
+          <button type="submit" class="btn btn-primary btn-comment">Add Comment</button>
+        </form>
+        <% } %>
+        
+        <div class="comment-container">
+          <% comments.forEach(comment => { %>
+            <div class="comment-card">
+              <p class="comment-text"><%=comment.content%></p>
+              <div class="comment-user">
+                <img src="<%= comment.createdBy.profileImageURL %>" alt="<%= comment.createdBy.fullName %>" class="comment-user-img" />
+                <span class="comment-username"><%=comment.createdBy.fullName%></span>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+    
+    <%- include('./partials/scripts') %>
+  </body>
+</html>

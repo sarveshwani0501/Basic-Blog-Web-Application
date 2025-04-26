@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Signup</title>
+    <style>
+      body {
+        background-color: #f8f9fa;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .container.mt-4 {
+        max-width: 450px;
+        margin: 80px auto;
+        padding: 30px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      form {
+        position: relative;
+      }
+
+      form:before {
+        content: "Create Your Account";
+        display: block;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+
+      form:after {
+        content: "Please fill in your details to get started";
+        display: block;
+        text-align: center;
+        font-size: 14px;
+        color: #7f8c8d;
+        margin-bottom: 30px;
+      }
+
+      .form-label {
+        font-weight: 500;
+        color: #2c3e50;
+        margin-bottom: 8px;
+      }
+
+      .form-control {
+        border-radius: 5px;
+        padding: 12px;
+        border: 1px solid #ddd;
+        transition: border-color 0.3s;
+        font-size: 16px;
+      }
+
+      .form-control:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        outline: none;
+      }
+
+      .btn-primary {
+        background-color: #3498db;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        padding: 12px;
+        width: 100%;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 10px;
+      }
+
+      .btn-primary:hover {
+        background-color: #2980b9;
+      }
+
+      /* Add this code at the end of your form styling */
+      form:after {
+        content: "Please fill in your details to get started";
+        display: block;
+        text-align: center;
+        font-size: 14px;
+        color: #7f8c8d;
+        margin-bottom: 30px;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('./partials/nav')%>
+
+    <div class="container mt-4">
+      <form action="/user/signup" method="post">
+        <div class="mb-3">
+          <label for="fullName" class="form-label">Full Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="fullName"
+            name="fullName"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email" name="email" />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    <%- include('./partials/scripts') %>
+  </body>
+</html>

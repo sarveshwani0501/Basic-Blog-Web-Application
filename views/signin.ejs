@@ -1,0 +1,207 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Signup</title>
+  </head>
+  <body>
+    <%- include('./partials/nav')%>
+
+    <div class="container mt-4">
+      <form action="/user/signin" method="post">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email" name="email" />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    <%- include('./partials/scripts') %>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Sign In</title>
+    <style>
+      body {
+        background-color: #f8f9fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      
+      .signin-container {
+        max-width: 450px;
+        margin: 80px auto;
+        padding: 30px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+      
+      .signin-header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      
+      .signin-header h2 {
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      
+      .signin-header p {
+        color: #7f8c8d;
+        font-size: 14px;
+      }
+      
+      .input-group {
+        margin-bottom: 20px;
+      }
+      
+      .form-label {
+        display: block;
+        font-weight: 500;
+        color: #2c3e50;
+        margin-bottom: 8px;
+        margin-top: 8px;
+        margin-right: 4px;
+      }
+      
+      .input-wrapper {
+        position: relative;
+      }
+      
+      .form-control {
+        width: 100%;
+        border-radius: 5px;
+        padding: 12px 12px 12px 35px;
+        border: 1px solid #ddd;
+        transition: border-color 0.3s;
+        font-size: 16px;
+      }
+      
+      .form-control:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        outline: none;
+      }
+      
+      .input-icon {
+        position: absolute;
+        top: 50%;
+        left: 12px;
+        transform: translateY(-50%);
+        color: #95a5a6;
+      }
+      
+      .btn-signin {
+        background-color: #3498db;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        padding: 12px;
+        width: 100%;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      
+      .btn-signin:hover {
+        background-color: #2980b9;
+      }
+      
+      .form-footer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+        color: #7f8c8d;
+      }
+      
+      .form-footer a {
+        color: #3498db;
+        text-decoration: none;
+      }
+      
+      .form-footer a:hover {
+        text-decoration: underline;
+      }
+      
+      .form-check {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      
+      .form-check-label {
+        margin-left: 5px;
+        color: #7f8c8d;
+      }
+      
+      .form-check-input {
+        margin-right: 5px;
+      }
+      
+      .forgot-password {
+        color: #3498db;
+        text-decoration: none;
+        font-size: 14px;
+      }
+      
+      .forgot-password:hover {
+        text-decoration: underline;
+      }
+      
+      .checkbox-wrapper {
+        display: flex;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('./partials/nav')%>
+
+    <div class="container">
+      <div class="signin-container">
+        <div class="signin-header">
+          <h2>Welcome Back</h2>
+          <p>Please sign in to access your account</p>
+        </div>
+        
+        <form action="/user/signin" method="post">
+          <div class="input-group">
+            <label for="email" class="form-label">Email address</label>
+            <div class="input-wrapper">
+              <i class="input-icon fas fa-envelope"></i>
+              <input type="email" class="form-control" id="email" name="email" placeholder="your@email.com" required />
+            </div>
+          </div>
+          
+          <div class="input-group">
+            <label for="password" class="form-label">Password</label>
+            <div class="input-wrapper">
+              <i class="input-icon fas fa-lock"></i>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-signin">Sign In</button>
+        </form>
+      </div>
+    </div>
+    
+    <%- include('./partials/scripts') %>
+    <!-- Make sure Font Awesome is included in your scripts partial or add it here -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+  </body>
+</html>
