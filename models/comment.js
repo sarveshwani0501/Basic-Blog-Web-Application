@@ -1,16 +1,18 @@
 const { Schema, model } = require("mongoose");
 
+// comment schema for storing comments 
+
 const commentSchema = new Schema(
   {
-    content: {
+    content: {                        // body of the comment
       type: String,
       required: true,
     },
-    createdBy: {
-      type: Schema.Types.ObjectId,
+    createdBy: {                      // user who wrote the comment reffering to the user model 
+      type: Schema.Types.ObjectId,     
       ref: "user",
     },
-    blogId: {
+    blogId: {                         // the blog on which the user commented
       type: Schema.Types.ObjectId,
       ref: "blog",
     },

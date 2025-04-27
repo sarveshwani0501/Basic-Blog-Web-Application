@@ -3,7 +3,6 @@ require("dotenv").config();
 
 const express = require("express");
 const path = require("path");
-const app = express();
 const userRoute = require("./routes/user");
 const blogRoute = require("./routes/blog");
 
@@ -13,11 +12,18 @@ const { checkForAuthenticationCookie } = require("./middlewares/auth");
 
 const Blog = require("./models/blog");
 
+// create an app
+const app = express();
+
+// Set a port
 const PORT = process.env.PORT || 8000;
 
+// Set the view engines and define paths
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
-console.log(process.env.MONGO_URL);
+
+
+// connect to mongoose
 connectToMongoose(process.env.MONGO_URL);
 
 // Middlewares
@@ -28,9 +34,10 @@ app.use(checkForAuthenticationCookie("token"));
 app.use(express.static(path.resolve("./public")));
 
 
+// route to handle get request on the home page
 app.get("/", async (req, res) => {
-  const allBlogs = await Blog.find({});
-  res.render("home", {
+  const allBlogs = await Blog.find({});            // extract all blogs from the DB
+  res.render("home", {                            // render them on the home page
     user: req.user,
     blogs: allBlogs,
   });
@@ -38,16 +45,10 @@ app.get("/", async (req, res) => {
 
 // Routes
 
-// app.get("/", async (req, res) => {
-//   console.log(req.user);
-//   res.render("home", {
-//     user: req.user,
-//   });
-// });
-
 app.use("/user", userRoute);
 
 app.use("/blog", blogRoute);
+
 
 // Make the app to listen to the PORT
 

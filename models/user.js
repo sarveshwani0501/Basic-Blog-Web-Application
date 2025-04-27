@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
-
 const bcrypt = require("bcrypt");
+
+// user Schema for authentication details
 
 const userSchema = new mongoose.Schema(
   {
@@ -35,6 +36,8 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// middleware to hash the password eveytime the password is modified the password will be hashed properly using this middleware
+
 userSchema.pre("save", async function (next) {
   const user = this;
 
@@ -50,6 +53,8 @@ userSchema.pre("save", async function (next) {
   }
 });
 
+// create a model for the schema 
 const User = mongoose.model("user", userSchema);
 
+// export the model
 module.exports = User;
